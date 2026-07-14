@@ -1,38 +1,52 @@
-# 🚗 FindCar —Oportunidades Automotivas
+# 🚗 FindCar - Agregador & Alerta de Oportunidades Automotivas
 
-> API REST inteligente desenvolvida em **Java 21** e **Spring Boot 4** para monitoramento de oscilações de mercado da Tabela FIPE. O sistema automatiza o acompanhamento de preços de veículos, notificando o usuário de forma assíncrona assim que sua oportunidade ideal atinge o valor desejado.
-
----
-
-## 🎯 O Problema Resolvido (Problem Solving)
-Comprar ou investir em veículos exige um monitoramento exaustivo e diário das flutuações da Tabela FIPE. O **FindCar** elimina esse trabalho manual ao centralizar o consumo encadeado de APIs automotivas externas, permitindo que usuários criem **Alertas Inteligentes de Preço** (ex: *"Me avise se o Honda Civic 2020 cair abaixo de R$ 90.000"*). O sistema rastreia essas variações em segundo plano e gera alertas imediatos assim que o preço-alvo é atingido.
+> API REST inteligente desenvolvida em **Java 21** e **Spring Boot 4** para catalogação, monitoramento e alerta de oscilações de mercado na Tabela FIPE[cite: 5, 6]. Projetada sob práticas modernas de engenharia, arquitetura limpa, resiliência e esteiras automatizadas de DevOps.
 
 ---
 
-## 🛠️ Tecnologias & Ferramentas Utilizadas
+## 🎯 O Problema Resolvido
 
-* **Linguagem Principal:** Java 21 (utilizando recursos modernos como Records, Pattern Matching e Virtual Threads)
-* **Framework:** Spring Boot 4 (Spring Web, Spring Data JPA, Spring Security)
-* **Banco de Dados:** PostgreSQL (Persistência relacional de usuários, favoritos e históricos)
-* **Segurança:** Spring Security + JWT (JSON Web Tokens) para autenticação stateless de rotas protegidas
-* **DevOps & Containers:** Docker & Docker Compose (Isolamento completo do ecossistema de serviços)
-* **Infraestrutura em Nuvem:** AWS (Deploy escalável utilizando instâncias EC2)
-* **Automação (CI/CD):** GitHub Actions (Esteira automatizada de build, testes integrados e deploy contínuo)
-* **Documentação:** Swagger UI / OpenAPI 3 (Interface interativa para testes rápidos de endpoints)
+Compradores e investidores do setor automotivo enfrentam dificuldades para monitorar manualmente as flutuações de preços da Tabela FIPE para fechar negócios no momento ideal. 
+
+O **FindCar** resolve essa dor centralizando o consumo de dados automotivos externos e automatizando o rastreamento de preços. O usuário define o veículo e o preço desejado (alerta); em segundo plano, um serviço inteligente analisa o mercado de forma assíncrona e dispara notificações quando o valor atinge a meta estipulada pelo usuário.
 
 ---
 
-## 🏗️ Arquitetura do Projeto
+## 🛠️ Tecnologias e Ferramentas Utilizadas
 
-O projeto adota uma estrutura modular focada em separação clara de responsabilidades, alta coesão e baixo acoplamento:
+### Backend Core
+* **Java 21 & Spring Boot 4** (Spring Web, JPA, Security)
+* **Jackson Core** (Desserialização assíncrona de payloads complexos da API externa)[cite: 5]
+* **PostgreSQL** (Persistência de usuários, históricos e alertas)[cite: 5]
+* **Spring Security & JWT** (Autenticação stateless e controle de acesso a rotas sensíveis)[cite: 5]
+
+### DevOps & Infraestrutura
+* **Docker & Docker Compose** (Containerização completa do ambiente local e de produção)
+* **AWS (EC2 & S3)** (Hospedagem em nuvem e persistência de artefatos/históricos)
+* **GitHub Actions** (Esteira automatizada de CI/CD para validação de builds, testes e deploy contínuo)
+
+---
+
+## 🔗 Demonstração e Testes (Deploy Ativo)
+
+Para facilitar a avaliação técnica sem necessidade de rodar o código localmente, disponibilizamos as seguintes ferramentas:
+
+* 🌐 **Interface Interativa (Swagger/OpenAPI):** [Acesse a Documentação Swagger](http://seu-ip-da-aws:8080/swagger-ui/index.html) *(Permite disparar requisições em tempo real contra nosso servidor)*
+* 📦 **Coleção de Endpoints (Postman):** [Importar Workspace no Postman](https://documenter.getpostman.com/view/seu-link-publico)
+* 📍 **URL Base de Produção (AWS):** `http://seu-ip-da-aws:8080/api/v1`
+
+---
+
+## 🗺️ Arquitetura de Pastas e Componentes
+
+A aplicação segue uma estrutura modular de alta coesão e baixo acoplamento:
 
 ```text
-br.com.alura.FindCar/
-│
-├── config/             # Segurança, JWT e configurações globais do Spring
-├── controller/         # Endpoints da API REST (Controllers)
-├── model/              # Entidades JPA (Mapeamento de Tabelas do Postgres)
-├── dto/                # Records para tráfego seguro de dados (Request/Response)
-├── repository/         # Camada de acesso ao banco (Spring Data JPA)
-├── service/            # Regras de negócio e consumo de APIs externas
-└── exception/          # Tratamento global e
+src/main/java/br/com/alura/FindCar/
+├── config/             # Configurações de Beans e Segurança (JWT Config)
+├── controller/         # Endpoints REST expostos
+├── dto/                # Records Java para Request/Response (Jackson)
+├── exception/          # Tratamento Global de Exceções (ControllerAdvice)
+├── model/              # Entidades mapeadas para o banco PostgreSQL
+├── repository/         # Interfaces de persistência de dados
+└── service/            # Lógica de consumo da API externa e agendamentos (Scheduler)
