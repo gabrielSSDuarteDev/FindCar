@@ -40,7 +40,6 @@ Para facilitar a avaliação técnica sem necessidade de rodar o código localme
 ## 🗺️ Arquitetura de Pastas e Componentes
 
 A aplicação segue uma estrutura modular de alta coesão e baixo acoplamento:
-
 ```text
 src/main/java/br/com/alura/FindCar/
 ├── config/             # Configurações de Beans e Segurança (JWT Config)
