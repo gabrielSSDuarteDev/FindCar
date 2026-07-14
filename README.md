@@ -1,4 +1,4 @@
-# 🚗 FindCar — O "Tinder" de Oportunidades Automotivas
+# 🚗 FindCar —Oportunidades Automotivas
 
 > API REST inteligente desenvolvida em **Java 21** e **Spring Boot 4** para monitoramento de oscilações de mercado da Tabela FIPE. O sistema automatiza o acompanhamento de preços de veículos, notificando o usuário de forma assíncrona assim que sua oportunidade ideal atinge o valor desejado.
 
