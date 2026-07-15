@@ -1,4 +1,4 @@
-package br.com.alura.FindCar.Pricnipal;
+package br.com.alura.FindCar.Principal;
 
 import br.com.alura.FindCar.model.Dados;
 import br.com.alura.FindCar.model.DadosVeiculo;
@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Principal {
         private final static Scanner sc = new Scanner(System.in);
