@@ -25,8 +25,9 @@ public class AlertController {
 
 
     @PostMapping
-    public ResponseEntity<String> createAlert(@RequestBody AlertRegisterDTO dto) {
+    public ResponseEntity<String> createAlert(@RequestBody  AlertRegisterDTO dto) {
         try {
+            User user = userService.loadUserByUsername(dto.modelName());
              alertService.createAlert(dto);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Alerta de preço criado com sucesso!");

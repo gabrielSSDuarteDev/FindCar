@@ -2,24 +2,41 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.1</version>
-		<relativePath/> </parent>
+		<relativePath/>
+	</parent>
+
 	<groupId>br.com.alura</groupId>
 	<artifactId>FindCar</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>FindCar</name>
 	<description>Projeto FindCar para monitoramento de preços da FIPE</description>
+
 	<properties>
 		<java.version>21</java.version>
 	</properties>
+
 	<dependencies>
+
+		<!-- 1. CORE & WEB -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+		<!--dependência para validação dos DTOs (@NotBlank, @NotNull) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+
+		<!-- 2. PERSISTÊNCIA & BANCO DE DADOS -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -27,10 +44,20 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+
+		<!-- 3. SEGURANÇA & AUTENTICAÇÃO -->
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
+		<!-- Biblioteca JJWT para geração e validação de Tokens JWT -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
@@ -49,17 +76,17 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+
+		<!-- 4. UTILITÁRIOS -->
 
 		<dependency>
 			<groupId>org.jspecify</groupId>
 			<artifactId>jspecify</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+
+
+		<!-- 5. TESTES -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
