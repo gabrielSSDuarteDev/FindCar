@@ -27,15 +27,12 @@ public class AlertController {
     @PostMapping
     public ResponseEntity<String> createAlert(@RequestBody AlertRegisterDTO dto) {
         try {
-
-            //User user = userService.findUserById(dto.userId());
-
-            // 2. Agora passamos o DTO e o Usuário encontrado para o seu AlertService original!
-           // alertService.createAlert(dto, user);
+             alertService.createAlert(dto);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Alerta de preço criado com sucesso!");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
 
+    }
 }
