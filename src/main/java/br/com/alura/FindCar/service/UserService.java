@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
         if (userRepository.findByEmail(dto.email()).isPresent()){
             throw new RuntimeException("E-mail já cadastrado no sistema!");
         }
-    String encryptedPassword =criptografarSenha(dto.password());
+    String encryptedPassword = criptografarSenha(dto.password());
 
 
     User newUser = new User(dto.email(),encryptedPassword,dto.name());
@@ -46,4 +46,13 @@ public class UserService implements UserDetailsService {
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado" + username));
     }
+
+
+    public User findById(Long id){
+        return userRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Usuário com ID " + id + "não encontrado!"));
+    }
+
+
+
 }

@@ -23,7 +23,10 @@ public class SecurityConfigurations {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-                    req.requestMatchers(HttpMethod.POST, "/users/**").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/alerts", "/alerts/**").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/users", "/users/**").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/users", "/users/**").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/alerts", "/alerts/**").permitAll();
 
                 req.anyRequest().authenticated();
                 })
