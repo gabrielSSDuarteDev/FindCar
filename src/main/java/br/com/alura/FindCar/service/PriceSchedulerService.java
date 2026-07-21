@@ -3,8 +3,10 @@ package br.com.alura.FindCar.service;
 
 import br.com.alura.FindCar.model.Alert;
 import br.com.alura.FindCar.repository.IAlertRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -14,6 +16,8 @@ public class PriceSchedulerService {
     private final IAlertRepository alertRepository;
     private final ConsumoAPI consumoAPI;
     private final ConverterDadosApi converteDados;
+    @Value("${fipe.api.base-url}")
+    private String baseUrl;
 
 
     public PriceSchedulerService(IAlertRepository alertRepository,
@@ -39,6 +43,23 @@ public class PriceSchedulerService {
         for(Alert alert : alerts){
             try{
                 System.out.println("\n Verificando Alerta ID " + alert.getId() + " - Modelo: " + alert.getModelName());
+
+
+                String finalUrl= UriComponentsBuilder.fromHttpUrl(baseUrl)
+                        .pathSegment("")
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             }catch(Exception e){
                 System.out.println("\n Erro ao processar o Alerta " + alert.getId() + ":" + e.getMessage());

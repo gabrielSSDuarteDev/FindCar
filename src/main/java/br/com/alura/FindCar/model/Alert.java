@@ -16,6 +16,15 @@ public class Alert {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(name = "brand_code", nullable = false)
+    private String brandCode;
+
+    @Column(name = "model_code", nullable = false)
+    private String modelCode;
+
+    @Column(name = "year_code", nullable = false)
+    private String yearCode;
+
     @Column(name = "fipe_code", nullable = false)
     private String fipeCode;
 
@@ -28,15 +37,23 @@ public class Alert {
     @Column(name = "current_price", nullable = false, precision = 10, scale = 2)
     private BigDecimal currentPrice;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_vehicle", nullable = false)
+    private TipoVeiculo typeVehicle;
+
 
     public Alert(){}
 
-    public Alert(User user, String fipeCode, String modelName, BigDecimal targetPrice, BigDecimal currentPrice) {
+    public Alert(TipoVeiculo typeVehicle, User user, String fipeCode, String modelName, BigDecimal targetPrice, BigDecimal currentPrice,String brandCode,String modelCode, String yearCode) {
+        this.typeVehicle = typeVehicle;
         this.user = user;
         this.fipeCode = fipeCode;
         this.currentPrice = currentPrice;
         this.modelName = modelName;
         this.targetPrice = targetPrice;
+        this.brandCode = brandCode;
+        this.modelCode = modelCode;
+        this.yearCode = yearCode;
     }
 
     public User getUser() {
@@ -85,6 +102,38 @@ public class Alert {
 
     public void setCurrentPrice(BigDecimal currentPrice) {
         this.currentPrice = currentPrice;
+    }
+
+    public String getBrandCode() {
+        return brandCode;
+    }
+
+    public void setBrandCode(String brandCode) {
+        this.brandCode = brandCode;
+    }
+
+    public String getModelCode() {
+        return modelCode;
+    }
+
+    public void setModelCode(String modelCode) {
+        this.modelCode = modelCode;
+    }
+
+    public String getYearCode() {
+        return yearCode;
+    }
+
+    public void setYearCode(String yearCode) {
+        this.yearCode = yearCode;
+    }
+
+    public TipoVeiculo getTypeVehicle() {
+        return typeVehicle;
+    }
+
+    public void setTypeVehicle(TipoVeiculo typeVehicle) {
+        this.typeVehicle = typeVehicle;
     }
 }
 
