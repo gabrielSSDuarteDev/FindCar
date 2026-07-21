@@ -8,19 +8,30 @@ import br.com.alura.FindCar.model.User;
 import br.com.alura.FindCar.repository.IAlertRepository;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+
+import static java.util.Arrays.stream;
 
 @Service
 public class AlertService {
 
     private final IAlertRepository alertRepository;
+    private final ConsumoAPI consumoAPI;
+    private final ConverterDadosApi converterDadosApi;
+
+    @Value("${fipe.api.base-url}")
+    private  String baseUrl;
 
 
 
-    public AlertService(IAlertRepository alertRepository) {
+    public AlertService(IAlertRepository alertRepository, ConsumoAPI consumoAPI, ConverterDadosApi converterDadosApi) {
         this.alertRepository = alertRepository;
+        this.consumoAPI = consumoAPI;
+        this.converterDadosApi = converterDadosApi;
     }
 
     public void createAlert(AlertRegisterDTO dto, User authenticatedUser) {
@@ -30,7 +41,6 @@ public class AlertService {
                 dto.modelCode(),
                 dto.yearCode()
         );
-
         Alert newAlert = new Alert(
                 dto.typeVehicle(),
                 authenticatedUser,
@@ -42,10 +52,11 @@ public class AlertService {
                 dto.modelCode(),
                 dto.yearCode()
         );
-
         alertRepository.save(newAlert);
     }
 
+
+    
     private String resolveCodeYearFipe(@NotNull(message = "O tipo do veículo é obrigatório (CARROS,MOTOS ou CAMINHOES)") TipoVeiculo tipoVeiculo,
                                        @NotNull(message = ("O código da marca é obrigatório")) String brandCode,
                                        @NotBlank(message = "O código do modelo é Obrigatório") String modelCode,
@@ -54,6 +65,30 @@ public class AlertService {
             return yearInput;
         }
         record DadosAno(String code, String name){}
+
+        try{
+
+            String urlAnos = UriComponentsBuilder.fromHttpUrl(baseUrl)
+                    .pathSegment(tipoVeiculo.getEndPoint())
+                    .pathSegment("marcas",brandCode)
+                    .pathSegment("modelos",modelCode)
+                    .pathSegment("anos")
+                    .toUriString();
+
+
+            String json = consumoAPI.obterDados(urlAnos);
+            List<DadosAno> yearsAvailable = converterDadosApi.obterLista(json, DadosAno.class );
+
+             return yearsAvailable.stream()
+                    .filter(a -> a.code.startsWith(yearInput) || a.name.startsWith(yearInput))
+                    .map(DadosAno::code)
+                    .findFirst()
+                    .orElse(yearInput);
+
+        }catch(Exception e){
+            return yearInput;
+
+        }
     }
 
     public List<Alert> listAlertByUser(User authenticatedUser){

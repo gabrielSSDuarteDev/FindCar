@@ -13,7 +13,7 @@ import java.net.http.HttpResponse;
 public class ConsumoAPI {
 
 
-    public String obterDadosCarro(String codigoURL) throws IOException, InterruptedException {
+    public String obterDados(String codigoURL) throws IOException, InterruptedException {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
