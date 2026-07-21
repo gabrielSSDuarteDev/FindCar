@@ -4,9 +4,10 @@ import br.com.alura.FindCar.service.IConverterDadosAPI;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Component
 public class ConverterDadosApi implements IConverterDadosAPI {
     private ObjectMapper objectMapper = new ObjectMapper();
 
