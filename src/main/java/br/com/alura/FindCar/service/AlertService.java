@@ -20,18 +20,18 @@ import static java.util.Arrays.stream;
 public class AlertService {
 
     private final IAlertRepository alertRepository;
-    private final ConsumoAPI consumoAPI;
-    private final ConverterDadosApi converterDadosApi;
+    private final ConsumoAPIService consumoAPIService;
+    private final ConverterDadosApiServiceService converterDadosApiService;
 
     @Value("${fipe.api.base-url}")
     private  String baseUrl;
 
 
 
-    public AlertService(IAlertRepository alertRepository, ConsumoAPI consumoAPI, ConverterDadosApi converterDadosApi) {
+    public AlertService(IAlertRepository alertRepository, ConsumoAPIService consumoAPIService, ConverterDadosApiServiceService converterDadosApiService) {
         this.alertRepository = alertRepository;
-        this.consumoAPI = consumoAPI;
-        this.converterDadosApi = converterDadosApi;
+        this.consumoAPIService = consumoAPIService;
+        this.converterDadosApiService = converterDadosApiService;
     }
 
     public void createAlert(AlertRegisterDTO dto, User authenticatedUser) {
@@ -50,13 +50,13 @@ public class AlertService {
                 dto.currentPrice(),
                 dto.brandCode(),
                 dto.modelCode(),
-                dto.yearCode()
+                yearCodeFipe
         );
         alertRepository.save(newAlert);
     }
 
 
-    
+
     private String resolveCodeYearFipe(@NotNull(message = "O tipo do veículo é obrigatório (CARROS,MOTOS ou CAMINHOES)") TipoVeiculo tipoVeiculo,
                                        @NotNull(message = ("O código da marca é obrigatório")) String brandCode,
                                        @NotBlank(message = "O código do modelo é Obrigatório") String modelCode,
@@ -76,8 +76,8 @@ public class AlertService {
                     .toUriString();
 
 
-            String json = consumoAPI.obterDados(urlAnos);
-            List<DadosAno> yearsAvailable = converterDadosApi.obterLista(json, DadosAno.class );
+            String json = consumoAPIService.obterDados(urlAnos);
+            List<DadosAno> yearsAvailable = converterDadosApiService.obterLista(json, DadosAno.class );
 
              return yearsAvailable.stream()
                     .filter(a -> a.code.startsWith(yearInput) || a.name.startsWith(yearInput))

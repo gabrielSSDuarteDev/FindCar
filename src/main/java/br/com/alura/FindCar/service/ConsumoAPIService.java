@@ -10,7 +10,7 @@ import java.net.http.HttpResponse;
 
 
 @Component
-public class ConsumoAPI {
+public class ConsumoAPIService {
 
 
     public String obterDados(String codigoURL) throws IOException, InterruptedException {

@@ -3,8 +3,8 @@ package br.com.alura.FindCar.Principal;
 import br.com.alura.FindCar.model.Dados;
 import br.com.alura.FindCar.model.DadosVeiculo;
 import br.com.alura.FindCar.model.modelos;
-import br.com.alura.FindCar.service.ConsumoAPI;
-import br.com.alura.FindCar.service.ConverterDadosApi;
+import br.com.alura.FindCar.service.ConsumoAPIService;
+import br.com.alura.FindCar.service.ConverterDadosApiServiceService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,8 +14,8 @@ import java.util.Scanner;
 
 public class Principal {
         private final static Scanner sc = new Scanner(System.in);
-        private final static ConsumoAPI consumo = new ConsumoAPI();
-        private final static ConverterDadosApi converter = new ConverterDadosApi();
+        private final static ConsumoAPIService consumo = new ConsumoAPIService();
+        private final static ConverterDadosApiServiceService converter = new ConverterDadosApiServiceService();
         private final String urlBASE = "https://parallelum.com.br/fipe/api/v1/";
 
 
@@ -48,7 +48,7 @@ public class Principal {
             endereco = urlBASE+"caminhoes/marcas";
         }
 
-        var json = consumo.obterDadosCarro(endereco);
+        var json = consumo.obterDados(endereco);
         System.out.println(json);
         var marcas = converter.obterLista(json, Dados.class);
 
@@ -66,7 +66,7 @@ public class Principal {
         var codigoMarca = sc.nextLine();
 
         endereco += "/"+codigoMarca+"/modelos";
-        json = consumo.obterDadosCarro(endereco);
+        json = consumo.obterDados(endereco);
         var modelosMarca = converter.obterDados(json, modelos.class);
 
         System.out.println("Modelos dessa Marca: ");
@@ -101,13 +101,13 @@ public class Principal {
         var code = sc.nextLine();
 
         endereco = endereco+"/"+code+"/anos";
-        json = consumo.obterDadosCarro(endereco);
+        json = consumo.obterDados(endereco);
         List<Dados> modeloAnos = converter.obterLista(json, Dados.class);
         List<DadosVeiculo> veiculos = new ArrayList<>();
 
         for (int i = 0 ; i < modeloAnos.size(); i++){
             var urlAnos = endereco+"/"+modeloAnos.get(i).codigo();
-            json = consumo.obterDadosCarro(urlAnos);
+            json = consumo.obterDados(urlAnos);
             DadosVeiculo veiculo = converter.obterDados(json, DadosVeiculo.class);
             veiculos.add(veiculo);
         }
